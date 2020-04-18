@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: userservice-deployment
+  labels: 
+    app: userservice
+spec: 
+  replicas: 2
+  selector: 
+    matchLabels:
+      app: userservice-deployment
+  template: 
+    metadata:
+      labels:
+        app: userservice-deployment
+    spec:
+      containers:
+      - env:
+        - name: USER_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: USER_PORT
+              name: user-service-deplyoment-config
+        - name: DB_SCHEMA
+          valueFrom:
+            configMapKeyRef:
+              key: DB_SCHEMA
+              name: user-service-deplyoment-config
+        - name: DB_USER
+          valueFrom:
+            configMapKeyRef:
+              key: DB_USER
+              name: user-service-deplyoment-config
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST
+              name: user-service-deplyoment-config
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: my-db-pass
+        image: sunnygoel1005/userservicedb:userdb
+        imagePullPolicy: Always
+        name: userservice-1
+      imagePullSecrets:
+        - name: registry-secret
+
+        

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app: user-service-deplyoment
+  name: user-service-deplyoment-config
+  namespace: default
+data:
+  USER_PORT: "3000"
+  DB_SCHEMA: "nagp"
+  DB_USER: "root"
+  DB_HOST: "35.221.222.246"
+
